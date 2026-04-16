@@ -8,26 +8,33 @@ package com.iit.csa.models;
  *
  * @author deegh
  */
+import java.util.ArrayList;
+import java.util.List;
+
 public class Room {
-    private int id;
+    private String id;
     private String name;
-    private String floor;
-    
-    public Room(int id, String name, String floor) {
+    private int capacity;
+    private List<String> sensorIds = new ArrayList<>();
+
+    public Room() {}
+
+    public Room(String id, String name, int capacity) {
         this.id = id;
         this.name = name;
-        this.floor = floor;
-    }    
-    public Room() {} //for JSON
-    
-    
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
-    
+        this.capacity = capacity;
+    }
+
+    // Getters and Setters
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
+
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
-    
-    public String getFloor() { return floor; }
-    public void setFloor(String floor) { this.floor = floor; }
-    
+
+    public int getCapacity() { return capacity; }
+    public void setCapacity(int capacity) { this.capacity = capacity; }
+
+    public List<String> getSensorIds() { return sensorIds; }
+    public void setSensorIds(List<String> sensorIds) { this.sensorIds = sensorIds; }
 }
