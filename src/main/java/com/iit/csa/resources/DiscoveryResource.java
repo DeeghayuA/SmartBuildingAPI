@@ -21,13 +21,13 @@ public class DiscoveryResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getApiMetadata() {
-        Map<String, Object> metadata = new HashMap<>();
+        Map<String, Object> metadata = new HashMap<>(); // Main map to hold all discovery information
         metadata.put("version", "1.0");
         metadata.put("developer", "Deeghayu");
         metadata.put("contact", "student@my.westminster.ac.uk");
         
         
-        Map<String, String> endpoints = new HashMap<>();
+        Map<String, String> endpoints = new HashMap<>(); //Application State Resource Map.
         endpoints.put("rooms", "/api/v1/rooms");
         endpoints.put("sensors", "/api/v1/sensors");
         
