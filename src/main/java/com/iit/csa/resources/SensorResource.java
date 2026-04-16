@@ -15,7 +15,10 @@ import com.iit.csa.models.Sensor;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.net.URI;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Path("/sensors")
 @Produces(MediaType.APPLICATION_JSON)
@@ -79,4 +82,12 @@ public class SensorResource {
     }
     
     // (Note: Part 4 Sub-Resource Locator will also go in this file later)
+    // PART 4.1: The Sub-Resource Locator Pattern
+    // Notice there is NO @GET or @POST here. It simply delegates the request.
+    @Path("/{sensorId}/readings")
+    public SensorReadingResource getReadingsResource(@PathParam("sensorId") String sensorId) {
+        // We pass the sensorId into the new resource so it knows which sensor it belongs to
+        return new SensorReadingResource(sensorId);
+    }
 }
+
