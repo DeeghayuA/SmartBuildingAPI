@@ -9,25 +9,34 @@ package com.iit.csa.models;
  * @author deegh
  */
 public class Sensor {
-    private int id;
-    private int roomId;
-    private String name;
+    private String id;
+    private String roomId;
+    private String status;
     private String type; 
+    private double currentValue;
 
     public Sensor() {} //for JSON
-    public Sensor(int id, int roomId, String name, String type) { this.id = id; this.roomId = roomId; this.name = name; this.type = type; }
+    public Sensor(String id, String type, String status, double currentValue, String roomId){ 
+        this.id = id; 
+        this.roomId = roomId; 
+        this.currentValue = currentValue;
+        this.status = status;
+        this.type = type; }
 
     
     
     
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
     
-    public int getRoomId() { return roomId; }
-    public void setRoomId(int roomId) { this.roomId = roomId; }
+    public String getRoomId() { return roomId; }
+    public void setRoomId(String roomId) { this.roomId = roomId; }
     
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
+
+    public double getCurrentValue() { return currentValue; }
+    public void setCurrentValue(double currentValue) { this.currentValue = currentValue; }
     
     public String getType() { return type; }
     public void setType(String type) { this.type = type; }
