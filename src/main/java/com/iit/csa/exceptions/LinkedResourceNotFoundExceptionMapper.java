@@ -8,6 +8,18 @@ package com.iit.csa.exceptions;
  *
  * @author deegh
  */
-public class LinkedResourceNotFoundExceptionMapper {
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.ext.ExceptionMapper;
+import javax.ws.rs.ext.Provider;
+
+public class LinkedResourceNotFoundExceptionMapper implements ExceptionMapper<LinkedResourceNotFoundException>{
+    @Override
+    public Response toResponse(LinkedResourceNotFoundException exception) {
+        String jsonError = "{\"error\": \"Unprocessable Entity\", \"message\": \"" + exception.getMessage() + "\"}";
+        return Response.status(422) // 422 Unprocessable Entity
+                .entity(jsonError)
+                .type(MediaType.APPLICATION_JSON)
+                .build();
     
-}
+}}
