@@ -8,6 +8,18 @@ package com.iit.csa.exceptions;
  *
  * @author deegh
  */
-public class RoomNotEmptyExceptionMapper {
-    
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.ext.ExceptionMapper;
+import javax.ws.rs.ext.Provider;
+@Provider
+public class RoomNotEmptyExceptionMapper implements ExceptionMapper<RoomNotEmptyException> {
+    @Override
+    public Response toResponse(RoomNotEmptyException exception) {
+        String jsonError = "{\"error\": \"Conflict\", \"message\": \"" + exception.getMessage() + "\"}";
+        return Response.status(Response.Status.CONFLICT) // 409
+                .entity(jsonError)
+                .type(MediaType.APPLICATION_JSON)
+                .build();
+    }
 }
