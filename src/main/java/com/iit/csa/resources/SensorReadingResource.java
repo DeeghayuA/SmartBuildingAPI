@@ -12,6 +12,9 @@ package com.iit.csa.resources;
 import com.iit.csa.dao.Database;
 import com.iit.csa.models.Sensor;
 import com.iit.csa.models.SensorReading;
+import com.iit.csa.exceptions.LinkedResourceNotFoundException; 
+import com.iit.csa.exceptions.SensorUnavailableException; 
+
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
@@ -51,9 +54,12 @@ public class SensorReadingResource {
         Sensor parentSensor = Database.sensors.get(sensorId);
         
         if (parentSensor == null) {
-            return Response.status(Response.Status.NOT_FOUND)
-                    .entity("{\"error\": \"Cannot add reading. Parent sensor not found.\"}")
-                    .build();
+            throw new LinkedResourceNotFoundException("Cannot add reading. Parent sensor not found.");
+        }
+        
+        // Throw 403 Forbidden if the sensor is not active
+        if ("INACTIVE".equalsIgnoreCase(parentSensor.getStatus()) || "MAINTENANCE".equalsIgnoreCase(parentSensor.getStatus())) {
+            throw new SensorUnavailableException("Sensor is currently " + parentSensor.getStatus() + ". Telemetry cannot be updated.");
         }
 
         // Generate ID and set the server timestamp for the reading
