@@ -19,13 +19,15 @@ public class GlobalExceptionMapper implements ExceptionMapper<Throwable> {
 
     @Override
     public Response toResponse(Throwable exception) {
-        // 1. Log the real error to your NetBeans console so YOU can debug it
+        // 1. Log the actual error to the server console so YOU (the developer) can still debug it
+        System.err.println("CRITICAL SERVER ERROR CAUGHT BY GLOBAL MAPPER: ");
         exception.printStackTrace();
-
-        // 2. Hide the error from the user! Build a clean, secure JSON response.
+        
+        // 2. Hide the error from the user/hacker! Build a highly polished, secure JSON response
         String secureErrorJson = "{\n" +
-                "  \"errorCode\": 500,\n" +
-                "  \"errorMessage\": \"An internal server error occurred. Our team has been notified.\"\n" +
+                "  \"error\": \"Internal Server Error\",\n" +
+                "  \"message\": \"An unexpected system error occurred. Our engineering team has been notified.\",\n" +
+                "  \"status\": 500\n" +
                 "}";
 
         // Return the 500 Internal Server Error with the safe JSON body
