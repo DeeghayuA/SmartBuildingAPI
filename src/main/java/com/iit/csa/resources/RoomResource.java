@@ -10,6 +10,7 @@ package com.iit.csa.resources;
  */
 import com.iit.csa.dao.Database;
 import com.iit.csa.models.Room;
+import com.iit.csa.exceptions.RoomNotEmptyException;
 
 
 import javax.ws.rs.*;
@@ -79,9 +80,7 @@ public class RoomResource {
         // Rubric Requirement (Excellent Band 2.2): Prevent deletion if sensors remain -> Return 409 Conflict
         // We check the Room's internal list of sensor IDs
         if (room.getSensorIds() != null && !room.getSensorIds().isEmpty()) {
-            return Response.status(Response.Status.CONFLICT)
-                    .entity("{\"error\": \"Cannot delete room. Active sensors are still registered to this room.\", \"activeSensorsCount\": " + room.getSensorIds().size() + "}")
-                    .build();
+            throw new RoomNotEmptyException("Cannot delete room. Active sensors are still registered to this room.");
         }
 
         // Optional secondary check: Scan the global sensors map just to be absolutely sure
@@ -89,9 +88,7 @@ public class RoomResource {
                 .anyMatch(sensor -> id.equals(sensor.getRoomId()));
                 
         if (hasGlobalSensorsLinked) {
-            return Response.status(Response.Status.CONFLICT)
-                    .entity("{\"error\": \"Cannot delete room. Active sensors are still registered to this room in the database.\"}")
-                    .build();
+            throw new RoomNotEmptyException("Cannot delete room. Active sensors are still registered to this room in the database.");
         }
 
         // If it passes the checks, delete the room safely
