@@ -11,6 +11,7 @@ package com.iit.csa.resources;
 import com.iit.csa.dao.Database;
 import com.iit.csa.models.Room;
 import com.iit.csa.models.Sensor;
+import com.iit.csa.exceptions.LinkedResourceNotFoundException;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
@@ -48,14 +49,9 @@ public class SensorResource {
         
         String targetRoomId = newSensor.getRoomId();
 
-        // Rubric Requirement (Excellent Band 3.1): Sensor Integrity
-        // We MUST verify that the roomId provided inside the JSON payload actually exists.
+        
         if (targetRoomId == null || !Database.rooms.containsKey(targetRoomId)) {
-            // According to your rubric's error handling section, 422 Unprocessable Entity 
-            // is the perfect response when a payload references an ID that doesn't exist.
-            return Response.status(422)
-                    .entity("{\"error\": \"Invalid roomId. The specified room does not exist.\"}")
-                    .build();
+            throw new LinkedResourceNotFoundException("Invalid roomId. The specified room does not exist.");
         }
 
         // Generate a new UUID for the Sensor
