@@ -2,18 +2,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.iit.csa.resources;
+package com.iit.csa.deeghayu20240905.resources;
 
 /**
  *
  * @author deegh
  */
 
-import com.iit.csa.dao.Database;
-import com.iit.csa.models.Sensor;
-import com.iit.csa.models.SensorReading;
-import com.iit.csa.exceptions.LinkedResourceNotFoundException; 
-import com.iit.csa.exceptions.SensorUnavailableException; 
+import com.iit.csa.deeghayu20240905.dao.Database;
+import com.iit.csa.deeghayu20240905.models.Sensor;
+import com.iit.csa.deeghayu20240905.models.SensorReading;
+import com.iit.csa.deeghayu20240905.exceptions.LinkedResourceNotFoundException; 
+import com.iit.csa.deeghayu20240905.exceptions.SensorUnavailableException; 
 
 
 import javax.ws.rs.*;

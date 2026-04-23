@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.iit.csa.resources;
+package com.iit.csa.deeghayu20240905.resources;
 
 /**
  *
@@ -25,15 +25,14 @@ public class DiscoveryResource {
         metadata.put("version", "1.0");
         metadata.put("developer", "Deeghayu");
         metadata.put("contact", "student@my.westminster.ac.uk");
-        
-        
-        Map<String, String> endpoints = new HashMap<>(); //Application State Resource Map.
+
+        Map<String, String> endpoints = new HashMap<>(); // Application State Resource Map.
         endpoints.put("rooms", "/api/v1/rooms");
         endpoints.put("sensors", "/api/v1/sensors");
-        
+
         metadata.put("resources", endpoints);
 
         return Response.ok(metadata).build();
     }
-    
+
 }

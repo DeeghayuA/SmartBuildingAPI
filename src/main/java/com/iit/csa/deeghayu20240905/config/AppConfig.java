@@ -2,14 +2,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.iit.csa.exceptions;
+package com.iit.csa.deeghayu20240905.config;
 
 /**
  *
  * @author deegh
  */
-public class RoomNotEmptyException extends RuntimeException{
-    public RoomNotEmptyException(String message) {
-        super(message);
-    }
+import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.core.Application;
+
+@ApplicationPath("/api/v1")
+
+public class AppConfig extends Application {
+    
 }
