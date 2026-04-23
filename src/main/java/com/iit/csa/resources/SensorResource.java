@@ -29,11 +29,8 @@ public class SensorResource {
     // 1. GET /api/v1/sensors?type=... (Retrieve sensors with optional type filtering)
     @GET
     public Response getSensors(@QueryParam("type") String type) {
-        // Get all sensors from the database
         List<Sensor> resultList = new ArrayList<>(Database.sensors.values());
         
-        // Rubric Requirement (Excellent Band 3.2): Filtered Retrieval
-        // If the user provided a "?type=" parameter, filter the list dynamically
         if (type != null && !type.trim().isEmpty()) {
             resultList = resultList.stream()
                     .filter(sensor -> sensor.getType().equalsIgnoreCase(type))
@@ -41,6 +38,19 @@ public class SensorResource {
         }
         
         return Response.ok(resultList).build();
+    }
+
+    // 1b. GET /api/v1/sensors/{id} (Retrieve single sensor)
+    @GET
+    @Path("/{id}")
+    public Response getSensorById(@PathParam("id") String id) {
+        Sensor sensor = Database.sensors.get(id);
+        if (sensor == null) {
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("{\"error\": \"Sensor not found\"}")
+                    .build();
+        }
+        return Response.ok(sensor).build();
     }
 
     // 2. POST /api/v1/sensors (Register a new sensor)
