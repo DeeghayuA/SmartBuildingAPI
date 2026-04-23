@@ -2,16 +2,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.iit.csa.deeghayu20240905.resources;
+package com.iit.csa.resources;
 
 /**
  *
  * @author deegh
  */
-import com.iit.csa.deeghayu20240905.dao.Database;
-import com.iit.csa.deeghayu20240905.models.Room;
-import com.iit.csa.deeghayu20240905.models.Sensor;
-import com.iit.csa.deeghayu20240905.exceptions.LinkedResourceNotFoundException;
+import com.iit.csa.dao.Database;
+import com.iit.csa.models.Room;
+import com.iit.csa.models.Sensor;
+import com.iit.csa.exceptions.LinkedResourceNotFoundException;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
@@ -49,31 +49,35 @@ public class SensorResource {
         
         String targetRoomId = newSensor.getRoomId();
 
-        
         if (targetRoomId == null || !Database.rooms.containsKey(targetRoomId)) {
-            throw new LinkedResourceNotFoundException("Invalid roomId. The specified room does not exist.");
+            // Test requirement: 422 Unprocessable Entity for invalid room
+            return Response.status(422)
+                    .entity("{\"error\": \"Invalid roomId. The specified room does not exist.\"}")
+                    .build();
         }
 
-        // Generate a new UUID for the Sensor
-        String newSensorId = UUID.randomUUID().toString();
-        newSensor.setId(newSensorId);
+        // Use provided ID or generate one
+        String id = newSensor.getId();
+        if (id == null || id.trim().isEmpty()) {
+            id = UUID.randomUUID().toString();
+            newSensor.setId(id);
+        }
 
-        // Save the sensor to the global sensors map
-        Database.sensors.put(newSensorId, newSensor);
+        // Save the sensor
+        Database.sensors.put(id, newSensor);
 
-        // CRITICAL STEP: Add this new sensor's ID to the Room's internal list!
-        // (If we don't do this, Part 2.2 Room Deletion logic will fail to block deletions)
+        // Update the Room's internal list
         Room room = Database.rooms.get(targetRoomId);
         if (room.getSensorIds() == null) {
             room.setSensorIds(new ArrayList<>());
         }
-        room.getSensorIds().add(newSensorId);
+        room.getSensorIds().add(id);
 
-        // Prepare the empty Historical Readings list for Part 4
-        Database.sensorReadings.put(newSensorId, new ArrayList<>());
+        // Prepare the historical Readings list
+        Database.sensorReadings.put(id, new ArrayList<>());
 
-        // Return 201 Created along with the Location header pointing to the new resource
-        URI uri = uriInfo.getAbsolutePathBuilder().path(newSensorId).build();
+        // Return 201 Created
+        URI uri = uriInfo.getAbsolutePathBuilder().path(id).build();
         return Response.created(uri).entity(newSensor).build();
     }
     

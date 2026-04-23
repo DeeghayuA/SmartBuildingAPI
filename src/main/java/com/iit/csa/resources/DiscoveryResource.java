@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.iit.csa.deeghayu20240905.resources;
+package com.iit.csa.resources;
 
 /**
  *
@@ -23,12 +23,14 @@ public class DiscoveryResource {
     public Response getApiMetadata() {
         Map<String, Object> metadata = new HashMap<>(); // Main map to hold all discovery information
         metadata.put("version", "1.0");
-        metadata.put("developer", "Deeghayu");
-        metadata.put("contact", "student@my.westminster.ac.uk");
+        metadata.put("developer", "Deeghayu (w2119769)");
+        metadata.put("student_id", "20240905");
+        metadata.put("contact", "w2119769@westminster.ac.uk");
 
-        Map<String, String> endpoints = new HashMap<>(); // Application State Resource Map.
+        Map<String, String> endpoints = new HashMap<>(); 
         endpoints.put("rooms", "/api/v1/rooms");
         endpoints.put("sensors", "/api/v1/sensors");
+        endpoints.put("debug", "/api/v1/debug/error");
 
         metadata.put("resources", endpoints);
 
