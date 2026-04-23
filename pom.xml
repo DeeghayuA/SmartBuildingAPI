@@ -13,14 +13,14 @@
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <failOnMissingWebXml>false</failOnMissingWebXml>
-        <jakartaee>8.0.0</jakartaee>
+        <javaee>8.0</javaee>
     </properties>
     
     <dependencies>
         <dependency>
-            <groupId>jakarta.platform</groupId>
-            <artifactId>jakarta.jakartaee-api</artifactId>
-            <version>${jakartaee}</version>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>${javaee}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -82,9 +82,9 @@
                             <silent>true</silent>
                             <artifactItems>
                                 <artifactItem>
-                                    <groupId>jakarta.platform</groupId>
-                                    <artifactId>jakarta.jakartaee-api</artifactId>
-                                    <version>${jakartaee}</version>
+                                    <groupId>javax</groupId>
+                                    <artifactId>javaee-api</artifactId>
+                                    <version>${javaee}</version>
                                     <type>jar</type>
                                 </artifactItem>
                             </artifactItems>

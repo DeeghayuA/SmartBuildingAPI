@@ -13,7 +13,7 @@ This project was developed strictly adhering to coursework constraints:
 ## 🛠️ Technology Stack
 
 - **Language**: Java 1.8+
-- **Framework**: JAX-RS 2.1 (Jersey Implementation)
+- **Framework**: Java EE 8 (JAX-RS 2.1 - Jersey)
 - **JSON Provider**: Jackson
 - **Server**: Apache Tomcat 9+
 - **Build Tool**: Maven
