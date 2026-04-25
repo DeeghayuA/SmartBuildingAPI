@@ -60,10 +60,8 @@ public class SensorResource {
         String targetRoomId = newSensor.getRoomId();
 
         if (targetRoomId == null || !Database.rooms.containsKey(targetRoomId)) {
-            // Test requirement: 422 Unprocessable Entity for invalid room
-            return Response.status(422)
-                    .entity("{\"error\": \"Invalid roomId. The specified room does not exist.\"}")
-                    .build();
+            // Rubric Part 5.2: Throw custom exception -> ExceptionMapper returns 422
+            throw new LinkedResourceNotFoundException("Invalid roomId. The specified room does not exist.");
         }
 
         // Use provided ID or generate one
