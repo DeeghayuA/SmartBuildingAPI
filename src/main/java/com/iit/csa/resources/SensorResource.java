@@ -88,6 +88,30 @@ public class SensorResource {
         URI uri = uriInfo.getAbsolutePathBuilder().path(id).build();
         return Response.created(uri).entity(newSensor).build();
     }
+
+    // 3. PUT /api/v1/sensors/{id} (Update sensor status and type)
+    @PUT
+    @Path("/{id}")
+    public Response updateSensor(@PathParam("id") String id, Sensor updatedData) {
+        Sensor existingSensor = Database.sensors.get(id);
+        
+        if (existingSensor == null) {
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("{\"error\": \"Sensor not found\"}")
+                    .build();
+        }
+
+        // Update the fields if they are provided
+        if (updatedData.getStatus() != null) {
+            existingSensor.setStatus(updatedData.getStatus());
+        }
+        if (updatedData.getType() != null) {
+            existingSensor.setType(updatedData.getType());
+        }
+
+        // Return the updated sensor
+        return Response.ok(existingSensor).build();
+    }
     
     // (Note: Part 4 Sub-Resource Locator will also go in this file later)
     // PART 4.1: The Sub-Resource Locator Pattern
