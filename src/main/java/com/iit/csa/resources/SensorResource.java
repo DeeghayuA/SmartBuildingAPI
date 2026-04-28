@@ -112,6 +112,33 @@ public class SensorResource {
         // Return the updated sensor
         return Response.ok(existingSensor).build();
     }
+
+    // 4. DELETE /api/v1/sensors/{id} (Delete a sensor)
+    @DELETE
+    @Path("/{id}")
+    public Response deleteSensor(@PathParam("id") String id) {
+        Sensor sensor = Database.sensors.get(id);
+        
+        if (sensor == null) {
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("{\"error\": \"Sensor not found\"}")
+                    .build();
+        }
+
+        // 1. Remove the sensor from the room's internal list
+        String roomId = sensor.getRoomId();
+        if (roomId != null && Database.rooms.containsKey(roomId)) {
+            Database.rooms.get(roomId).getSensorIds().remove(id);
+        }
+
+        // 2. Remove the sensor's historical readings
+        Database.sensorReadings.remove(id);
+
+        // 3. Remove the sensor itself from the database
+        Database.sensors.remove(id);
+
+        return Response.ok("{\"message\": \"Sensor deleted successfully\"}").build();
+    }
     
     // (Note: Part 4 Sub-Resource Locator will also go in this file later)
     // PART 4.1: The Sub-Resource Locator Pattern
