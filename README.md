@@ -234,3 +234,9 @@ Logging every incoming request and outgoing response is a classic example of a c
 Manual logging violates the DRY (Don't Repeat Yourself) principle. It clutters the business logic with infrastructure code. Furthermore, as the API expands and new endpoints are added, developers might forget to add the logging statements, leading to silent gaps in the system's observability.
 
 JAX-RS filters provide an elegant, centralized architectural solution. My `LoggingFilter` class implements both `ContainerRequestFilter` and `ContainerResponseFilter` and is registered with the `@Provider` annotation. The JAX-RS framework automatically intercepts every single request before it reaches the resource method, and every response after the method finishes, routing them through this filter. This guarantees complete coverage across the API without writing a single line of logging code inside the actual resource classes. If the logging format ever needs to be updated, it only requires modifying one single file.
+
+---
+
+## Demonstration Video
+
+[View Demonstration Video](https://drive.google.com/file/d/1SUP4APZhq99c6N0RrcaPsoqdLZFoKsWr/view?usp=sharing)
